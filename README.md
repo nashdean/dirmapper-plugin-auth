@@ -1,0 +1,1 @@
+# dirmapper-plugin-auth
