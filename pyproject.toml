@@ -3,15 +3,15 @@ requires = ["setuptools>=42", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "dirmapper-plugin-auth"
-version = "0.1.0"
-description = "Authentication plugin for Dirmapper"
+name = "dirmapper-provider"
+version = "0.0.0"
+description = "Provider plugin for Dirmapper supporting multiple APIs"
 authors = [
     {name = "Nash Dean", email = "nashdean.github@gmail.com"}
 ]
 readme = "README.md"
 license = { file = "LICENSE" }
-keywords = ["authentication", "plugin", "dirmapper"]
+keywords = ["provider", "plugin", "dirmapper", "github", "api"]
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
@@ -27,12 +27,12 @@ dependencies = [
 ]
 
 [project.urls]
-Source = "https://github.com/nashdean/dirmapper-plugin-auth"
-Issues = "https://github.com/nashdean/dirmapper-plugin-auth/issues"
+Source = "https://github.com/nashdean/dirmapper-provider"
+Issues = "https://github.com/nashdean/dirmapper-provider/issues"
 
 [tool.setuptools.packages.find]
 where = ["src"]
-include = ["github*"]
+include = ["providers*", "auth*", "managers*", "utils*"]
 
 [tool.pytest.ini_options]
 minversion = "6.0"
@@ -43,5 +43,5 @@ testpaths = [
 
 [tool.mypy]
 python_version = "3.10"
-files = ["dirmapper_plugin_auth", "tests"]
+files = ["src", "tests"]
 ignore_missing_imports = true

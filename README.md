@@ -1,6 +1,6 @@
-# dirmapper-plugin-auth
+# dirmapper-provider
 
-`dirmapper-plugin-auth` is a plugin for `dirmapper-core` that focuses on authentication for third-party providers. It integrates directly with the `dirmapper` logic to provide seamless authentication capabilities.
+`dirmapper-provider` is a plugin for `dirmapper-core` that focuses on integrating with third-party providers like GitHub. It provides seamless authentication and API interaction capabilities.
 
 ## Features
 
@@ -9,43 +9,50 @@
 - Retry mechanism with exponential backoff for transient errors.
 - Fetch authenticated user details from GitHub.
 - Fetch repository details from GitHub.
+- Fetch directory structure from GitHub repositories.
 
 ## Installation
 
 To install the plugin, use pip:
 
 ```sh
-pip install dirmapper-plugin-auth
+pip install dirmapper-provider
 ```
 
 ## Usage
 
-### GitHub Authentication
+### GitHub Provider
 
-To use the `GitHubAuthManager` for authenticating with the GitHub API:
+To use the `GitHubProvider` for interacting with the GitHub API:
 
 ```python
-from github.auth_manager import GitHubAuthManager, GitHubUserManager
+from providers.github_provider import GitHubProvider
+from service import ProviderManager
 
-# Initialize the GitHubAuthManager with your OAuth token
-auth_manager = GitHubAuthManager(oauth_token="your_oauth_token")
+# Initialize the GitHubProvider with your OAuth token
+provider = GitHubProvider(oauth_token="your_oauth_token")
 
-# Validate the OAuth token
-if auth_manager.validate_token():
+# Initialize the ProviderManager with the GitHubProvider
+manager = ProviderManager(provider)
+
+# Authenticate the provider
+if manager.authenticate():
     print("Token is valid")
 
-# Initialize the GitHubUserManager with the auth manager
-user_manager = GitHubUserManager(auth_manager=auth_manager)
-
-# Get authenticated user details
-user_details = user_manager.get_user_details()
+# Fetch authenticated user details
+user_details = manager.get_user_details()
 if user_details:
     print(user_details)
 
-# Get repository details
-repo_details = user_manager.get_repository_details(owner="owner_name", repo="repo_name")
+# Fetch repository details
+repo_details = manager.get_repository_details(owner="owner_name", repo="repo_name")
 if repo_details:
     print(repo_details)
+
+# Fetch directory structure
+repo_url = "https://github.com/owner_name/repo_name"
+directory_structure = manager.fetch_directory_structure(repo_url)
+print(directory_structure)
 ```
 
 ## Contributing
